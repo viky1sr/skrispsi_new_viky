@@ -1,0 +1,9 @@
+POST http://127.0.0.1:8000/api/master-spa/store
+Content-Type: application/json
+
+{
+    "price" : 100000,
+    "name" : "Testing Home Care"
+}
+
+###
