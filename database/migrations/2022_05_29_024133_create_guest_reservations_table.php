@@ -21,9 +21,9 @@ class CreateGuestReservationsTable extends Migration
             $table->string('wa')->nullable();
             $table->dateTime('date_reservation');
             $table->string('hour_reservation');
-            $table->unsignedBigInteger('type_reservation');
-            $table->unsignedBigInteger('name_reservation');
-            $table->string('address');
+            $table->unsignedBigInteger('type_reservation_id');
+            $table->unsignedBigInteger('name_reservation_id');
+            $table->text('address');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

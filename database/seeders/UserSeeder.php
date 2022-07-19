@@ -18,21 +18,31 @@ class UserSeeder extends Seeder
     public function run()
     {
         $admin = User::firstOrCreate([
-            'name' => 'Elvira Karina',
-            'email' => 'admin@demo.com',
+            'full_name' => 'Elvira Karina',
+            'email' => 'vieramomandbabyspa@gmail.com',
             'number_phone' => (int) '081319599677',
             'password' => \Hash::make('qweasd123'),
             'email_verified_at' => Carbon::now()
         ]);
         $admin->assignRole('admin');
 
-        $admin = User::firstOrCreate([
-            'name' => 'Guest',
-            'email' => 'guest@guest.com',
+        $admin1 = User::firstOrCreate([
+            'full_name' => 'Admin',
+            'email' => 'admin@demo.com',
             'number_phone' => (int) '12345678',
             'password' => \Hash::make('qweasd123'),
             'email_verified_at' => Carbon::now()
         ]);
-        $admin->assignRole('member');
+        $admin1->assignRole('admin');
+
+
+        $member = User::firstOrCreate([
+            'full_name' => 'Member',
+            'email' => 'member@demo.com',
+            'number_phone' => (int) '12345678',
+            'password' => \Hash::make('qweasd123'),
+            'email_verified_at' => Carbon::now()
+        ]);
+        $member->assignRole('member');
     }
 }

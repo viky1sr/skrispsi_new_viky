@@ -6,9 +6,9 @@
     <!-- Title -->
     <title>Viera Mom & Baby Spa</title>
     <!-- CSS Vendor -->
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/font-awesome.min.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/bootstrap.min.css')}}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/mdb.min.css')}}">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/mdb.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/swiper.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/style.css')}}">

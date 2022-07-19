@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/','DashboardController@index')->name('home');
-
-Route::get('/',function (){
-   return view('lading_page');
-});
+Route::get('/','LadingPageController@index')->name('home');
 
 Auth::routes();
 

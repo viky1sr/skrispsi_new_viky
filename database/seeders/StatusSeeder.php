@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterStatus;
+use App\HomeCare\MasterStatus\MasterStatus;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder

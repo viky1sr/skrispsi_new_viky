@@ -16,12 +16,16 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('type_reservation');
-            $table->unsignedBigInteger('name_reservation');
+            $table->unsignedBigInteger('type_reservation_id');
+            $table->unsignedBigInteger('name_reservation_id');
             $table->string('city');
             $table->string('village');
-            $table->string('address');
+            $table->text('address');
+            $table->dateTime('date_reservation');
+            $table->string('hour_reservation');
             $table->unsignedBigInteger('reservation_daily')->default(0);
+            $table->unsignedBigInteger('reservation_meet')->default(0);
+            $table->string('reservation_repeat')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

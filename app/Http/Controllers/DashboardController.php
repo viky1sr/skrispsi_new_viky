@@ -23,7 +23,6 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request) {
-//        dd(Route::has('register'));
         return view('home');
     }
 }

@@ -15,7 +15,8 @@ class CreateMasterStatusesTable extends Migration
     {
         Schema::create('master_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedBigInteger('status_id')->unique();
+            $table->string('status_name');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
