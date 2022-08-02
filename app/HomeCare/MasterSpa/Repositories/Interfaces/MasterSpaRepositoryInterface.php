@@ -13,4 +13,5 @@ interface MasterSpaRepositoryInterface extends BaseRepositoryInterface
     public function findMasterSpa(int $id) : MasterSpa;
     public function deleteMasterSpa();
     public function dataTableMasterSpa(array $params);
+    public function listMasterSpa(array $params);
 }

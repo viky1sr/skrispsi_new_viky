@@ -9,8 +9,12 @@
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{asset('/asset')}}/fonts/material-icon/css/material-design-iconic-font.min.css">
 
+    <link rel="icon" href="{{asset('logo_viera.png')}}" type="image/x-icon">
+
     <!-- Main css -->
     <link rel="stylesheet" href="{{asset('/asset')}}/css/style.css">
+
+
 </head>
 <body>
 

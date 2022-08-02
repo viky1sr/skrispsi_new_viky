@@ -83,4 +83,37 @@ class MasterHomeCareRepository extends BaseRepository implements MasterHomeCareR
             throw new createMasterHomeCareErrorException('Sorry, data master home care not found.');
         }
     }
+
+    public function listMasterHomeCare(array $params)
+    {
+        try {
+            $table = $this->model
+                ->select('id','name','price','type')
+                ->orderby('name','desc')
+                ->when(isset($params['id']),function ($q) use($params){
+                    $q->where('id','=',$params['id']);
+                })
+                ->when(isset($params['filter']),function ($q) use($params){
+                    $q->where('name',"LIKE" ,($params['filter'] ? '%'.$params['filter'].'%' : '%%'));
+                });
+
+            if(isset($params['limit']) ) {
+                $table->take($params['limit']);
+
+                if (isset($params['offset']) ) {
+                    $table->skip($params['offset']);
+                }
+            }
+            return apiGeneral($table->get(),$table);
+
+        } catch (QueryException $e){
+            report($e);
+            throw new createMasterHomeCareErrorException('Sorry, data master home care not found.');
+        }
+    }
+
+    public function dataMasterHomeCare(): MasterHomeCare
+    {
+        return $this->model->select('id','name','price')->get();
+    }
 }

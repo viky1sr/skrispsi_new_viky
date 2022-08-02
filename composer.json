@@ -20,7 +20,7 @@
         "spatie/laravel-permission": "^4.2",
         "tymon/jwt-auth": "^1.0",
         "yajra/laravel-datatables-oracle": "~9.0",
-        "yoeunes/toastr": "^1.2"
+        "yoeunes/toas   tr": "^1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

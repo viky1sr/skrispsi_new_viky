@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers\HomeCare;
 
+use App\Genetic\ReservationGenetic\Repositories\GeneticRepository;
+use App\HomeCare\Reservation\Repositories\ReservationRepository;
 use App\HomeCare\Reservation\Request\ReservationValidation;
+use App\HomeCare\Reservation\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ReservationController extends Controller
 {
 
-    private $valReservasi;
+    private $valResevation;
+    private $repoResevation;
+    private $repoGenetic;
 
     public function __construct(
-        ReservationValidation $valReservasi
+        ReservationValidation $valResevation,
+        ReservationRepository $repoResevation,
+        GeneticRepository $repoGenetic
     ){
-        $this->valReservasi = $valReservasi;
-//        $this->middleware('auth');
+        $this->valResevation = $valResevation;
+        $this->repoResevation = $repoResevation;
+        $this->repoGenetic = $repoGenetic;
+        $this->middleware('auth');
     }
 
     /**
@@ -25,7 +35,17 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.resevation.index');
+    }
+
+    public function dataTable(Request $request){
+        if(\Auth::user()->hasRole('admin')){
+            $data = Reservation::with('r_genetic','master_data','status');
+        } else {
+            $data = Reservation::with('r_genetic','master_data','status')->where('user_id','=',\Auth::user()->id);
+        }
+
+        return DataTables::of($data)->toJson();
     }
 
     /**
@@ -35,7 +55,12 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        return view('pages.reservasi.create_or_update');
+        $array = [
+            'home' => \DB::table('master_home_cares')->select('id','name','price')->get(),
+            'baby' => \DB::table('master_spas')->select('id','name','price')->get(),
+        ];
+
+        return view('pages.resevation.create_or_update',$array);
     }
 
     /**
@@ -46,7 +71,21 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $this->valResevation->createValidation($request->all());
+        if($validation){
+            return $validation;
+        }
+        if($data = $this->repoResevation->createResevation($request->except('_method', '_token'))){
+            if($request->reservation_meet){
+                $this->repoGenetic->createGenetic([
+                    'reservation_id' => $data->id
+                ]);
+            }
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Success create reservation.'
+            ],200);
+        }
     }
 
     /**

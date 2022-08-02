@@ -11,4 +11,6 @@ interface MasterHomeCareRepositoryInterface extends BaseRepositoryInterface
     public function updateMasterHomeCare(array $update) : bool;
     public function findMasterHomeCare(int $id) : MasterHomeCare;
     public function deleteMasterHomeCare();
+    public function listMasterHomeCare(array $params);
+    public function dataMasterHomeCare() : MasterHomeCare;
 }

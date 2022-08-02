@@ -7,6 +7,20 @@ function rupiah($angka) {
     return $hasil_rupiah;
 }
 
+function apiGeneral($data, $table) {
+    if (count(array($table)) == 0 ) {
+        return response()->json([
+            'status_code' => 204,
+            'data' => $data
+        ],200);
+    } else {
+        return response()->json([
+            'status_code' => 200,
+            'data' => $data
+        ],200);
+    }
+}
+
 function resevationGuestValidation($req){
     $validated = Validator::make($req, [
         'full_name' => 'required',

@@ -3,7 +3,7 @@
 <!--begin::Head-->
 <head><base href="../../../">
     <meta charset="utf-8" />
-    <title>Error Page</title>
+    <title>Viera Mom & Baby Spa</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!--begin::Fonts-->
@@ -19,7 +19,7 @@
     <!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
     <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="{{asset('logo_rptra.jpg')}}" />
+    <link rel="shortcut icon" href="{{asset('logo_viera.png')}}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->

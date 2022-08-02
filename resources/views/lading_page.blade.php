@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/menu.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('lading_page/assets/css/responsive.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('cork/plugins/select2/select2.min.css')}}">
     <!-- Favicons -->
     <link rel="icon" href="{{asset('logo_viera.png')}}" type="image/x-icon">
 </head>
@@ -208,20 +209,17 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <select id="isService" name="type_reservation" class="form-control">
+                                <select id="isService" name="type_reservation" class="form-control select2">
                                     <option value="">-- Select Services --</option>
-                                    <option value="home_care">Home Care</option>
-                                    <option value="baby_spa">Baby SPA</option>
+                                    <option value="1">Home Care</option>
+                                    <option value="2">Baby SPA</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-md-6 d-none" id="noneService">
                             <div class="md-form mb-0">
-                                <select name="name_reservation" class="form-control">
-                                    <option class="isLabel" value=""></option>
-                                    <option class="d-none isHomeCare" value="home_care">Home Care</option>
-                                    <option class="d-none isBabySpa" value="baby_spa">Baby SPA</option>
+                                <select name="name_reservation" class="form-control selectMaster">
                                 </select>
                             </div>
                         </div>
@@ -345,29 +343,54 @@
 <script src="{{asset('lading_page/assets/js/plugins.js')}}"></script>
 <script src="{{asset('lading_page/assets/js/menu.js')}}"></script>
 <script src="{{asset('lading_page/assets/js/main.js')}}"></script>
+<script src="{{asset('cork/plugins/select2/select2.min.js')}}"></script>
 
 <script>
+    $(".select2").select2({
+        placeholder: "Make a Selection",
+        allowClear: true
+    });
+
     $('#isService').change( function(){
         let val = $(this).val();
-        if(val == 'home_care'){
+        let apiUrl = (val == 1) ? '/api/general/list/homecare' : '/api/general/list/babyspa';
+        if(val == '1'){
             $('#noneService').removeClass('d-none')
-            $('.isHomeCare').removeClass('d-none')
-            $('.isChangeSelected').val("")
-            $('.isBabySpa').addClass('d-none')
-            $('.isLabel').html('<label for="template-contactform-service ">-- Select Home Care --</label>')
-        } else if(val == 'baby_spa'){
+            $('.isLabel').html('<label for="template-contactform-service ">List Harga Home Care</label>')
+        } else if(val == '2'){
             $('#noneService').removeClass('d-none')
-            $('.isBabySpa').removeClass('d-none')
-            $('.isHomeCare').addClass('d-none')
-            $('.isChangeSelected').val("")
-            $('.isLabel').html('<label for="template-contactform-service ">-- Select Baby SPA --</label>')
+            $('.isLabel').html('<label for="template-contactform-service ">List Harga Baby SPA</label>')
         } else {
             $('#noneService').addClass('d-none')
-            $('.isHomeCare').addClass('d-none')
-            $('.isBabySpa').addClass('d-none')
-            $('.isLabel').html('');
-            $('.isChangeSelected').val("")
         }
+
+        $('.selectMaster').select2({
+            ajax: {
+                url: apiUrl,
+                type: "get",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        filter: params.term, // search term
+                        limit: 15,
+                    };
+                },
+                processResults: function (response) {
+                    console.log('vikyy',response)
+                    return {
+                        results: response.data
+                    };
+                },
+                cache: true
+            },
+            templateResult: function (dataRow) {
+                return dataRow.name || dataRow.text;
+            },
+            templateSelection: function (dataRow) {
+                return dataRow.name || dataRow.text;
+            }
+        })
     });
 </script>
 </body>

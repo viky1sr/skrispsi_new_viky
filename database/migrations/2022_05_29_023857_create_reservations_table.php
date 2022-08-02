@@ -23,8 +23,8 @@ class CreateReservationsTable extends Migration
             $table->text('address');
             $table->dateTime('date_reservation');
             $table->string('hour_reservation');
-            $table->unsignedBigInteger('reservation_daily')->default(0);
             $table->unsignedBigInteger('reservation_meet')->default(0);
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->string('reservation_repeat')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
@@ -33,6 +33,10 @@ class CreateReservationsTable extends Migration
         Schema::table('reservations', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->on('users')
+                ->references('id');
+
+            $table->foreign('status_id')
+                ->on('master_statuses')
                 ->references('id');
         });
     }

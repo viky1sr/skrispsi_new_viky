@@ -30,3 +30,8 @@ Route::group(['prefix' => 'v1'], function() {
     Route::get('/success','Api\Datatable\ListBookingApi@success')->name('success');
     Route::get('/reject','Api\Datatable\ListBookingApi@reject')->name('reject');
 });
+
+Route::group(['prefix' => 'general', 'as' => 'general.'], function () {
+    Route::get('/list/homecare','Api\General\MasterController@masterHomeCare')->name('listhomecare');
+    Route::get('/list/babyspa','Api\General\MasterController@masterBabySpa')->name('listbabyspa');
+});

@@ -15,7 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('bank_name');
+            $table->string('price');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('reservation_id');
             $table->unsignedBigInteger('file_id');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('updated_by')->default(0);
@@ -29,6 +32,9 @@ class CreatePaymentsTable extends Migration
                 ->references('id');
             $table->foreign('file_id')
                 ->on('master_files')
+                ->references('id');
+            $table->foreign('reservation_id')
+                ->on('reservations')
                 ->references('id');
             $table->foreign('status_id')
                 ->on('master_statuses')

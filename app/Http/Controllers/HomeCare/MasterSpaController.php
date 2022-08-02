@@ -34,6 +34,10 @@ class MasterSpaController extends Controller
         //
     }
 
+    public function dataTable(Request $request){
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
