@@ -45,7 +45,7 @@
                                         </div>
 
                                         <div class="n-chk col-md-4 mb-6">
-                                            <p><span class="text-warning">*</span> silakan check jika jadwal lebih dari 1 bulan</p>
+                                            <p><span class="text-warning">*</span> silakan check jika jadwal lebih dari 1x pertemuan</p>
                                             <label class="new-control new-checkbox checkbox-primary">
                                                 <input type="checkbox" class="new-control-input isJadwal">
                                                 <span class="new-control-indicator"></span>Penjadwalan
@@ -124,7 +124,7 @@
                         <div class="opening-table" style="background-color: #f5f5f5">
                             <div class="heading-block bottommargin-sm border-bottom-0 mb-4">
                                 <h5>Jadwal Home Care &amp; Baby SPA</h5>
-                                <p><span class="text-danger">*</span> Mohon pilih tanggal H+1 setelah resevation</p>
+                                <p><span class="text-danger">*</span> Mohon pilih tanggal H+1 setelah reservasi</p>
                             </div>
                             <div class="time-table-wrap clearfix">
                                 <div class="row time-table">

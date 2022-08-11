@@ -55,12 +55,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        $array = [
-            'home' => \DB::table('master_home_cares')->select('id','name','price')->get(),
-            'baby' => \DB::table('master_spas')->select('id','name','price')->get(),
-        ];
-
-        return view('pages.resevation.create_or_update',$array);
+        return view('pages.resevation.create_or_update');
     }
 
     /**
@@ -140,6 +135,11 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($this->repoResevation->destroyResevation($id)){
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Success deleted data.'
+            ],200);
+        }
     }
 }

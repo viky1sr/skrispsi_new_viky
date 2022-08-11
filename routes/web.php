@@ -25,6 +25,19 @@ Route::group(['prefix' => 'reservation', 'as' => 'reservation.'], function (){
     Route::get('/create','HomeCare\ReservationController@create')->name('create');
 });
 
+Route::group(['middleware' => 'role:admin'], function(){
+    Route::get('/vikyganteng', function (){
+        \Illuminate\Support\Facades\Artisan::call('route:cache');
+        \Illuminate\Support\Facades\Artisan::call('optimize');
+        \Illuminate\Support\Facades\Artisan::call('algorithm:genetic');
+        $data = rand(100,1000);
+        return '
+        <h1 style="text-align: center">viky memang ganteng 😂😂🙏, sudah running yaaa</h1>
+        <p style="text-align: center"><a href="/">back to home</a></p>
+        '.$data;
+    });
+});
+
 Route::group(['prefix' => 'resevation','as' => 'resevation.'],function () {
     Route::get('/','HomeCare\ReservationController@index')->name('index');
     Route::get('/datatable','HomeCare\ReservationController@dataTable')->name('datatable');

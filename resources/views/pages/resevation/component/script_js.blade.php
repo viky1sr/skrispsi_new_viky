@@ -67,10 +67,8 @@
             {data: 'status.status_name',name: 'status.status_name'},
             @role('admin')
             {data: 'id',name: 'id', render: (data,type,row) => {
-                    let checkStatusDel =  row.status_id > 1 ? true : false;
-                    let checkStatusUp =  row.status_id >= 1 ? true : false;
-
-                    console.log('sss',checkStatusDel,checkStatusUp)
+                    let checkStatusDel =  row.status_id >= 0 ? true : false;
+                    let checkStatusUp =  row.status_id > 1 ? true : false;
 
                     return  `
                      <div class="dropdown custom-dropdown text-center">
