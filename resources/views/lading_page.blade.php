@@ -37,9 +37,20 @@
                         <ul class="menu list-inline">
                             <li class="active"><a href="#home">Home</a></li>
                             <li><a href="#listresevation">List Resevation</a></li>
-                            <li><a href="#resevation">Resevation</a></li>
+{{--                            <li><a href="#resevation">Resevation</a></li>--}}
+                            @if(\Auth::check() == false)
                             <li><a href="{{url('/register')}}">Register</a></li>
-                            <li><a href="{{url('/register')}}">Login</a></li>
+                            <li><a href="{{url('/login')}}">Login</a></li>
+                                @else
+                                <li><a href="{{route('to_home')}}">Admin Panel</a></li>
+                                <li><a href="{{route('logout')}}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"
+                                    >Logout</a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @endif
                         </ul>
                     </div>
                     <!-- #header-menu-wrap -->
@@ -105,179 +116,179 @@
             <div class="col-md-1"></div>
             <div class="col-md-5 mb-md-0 mb-5">
                 <h4 class="text-center mb-4">Home Care</h4>
-                @for($i= 0; $i < 15;$i++)
+                @foreach($home as $item)
                     <div class="row text-center">
-                        <p class="col-md-5">Testingg</p>
-                        <span class="col-md-7 text-success">Rp. 500.000</span>
+                        <p class="col-md-5">{{$item->name}}</p>
+                        <span class="col-md-7 text-success">Rp. {{rupiah($item->price)}}</span>
                     </div>
-                @endfor
+                @endforeach
 
             </div>
             <div class="col-md-5 mb-md-0 mb-5">
                 <h4 class="text-center mb-4">Baby Spa</h4>
-                @for($i= 0; $i < 9;$i++)
+                @foreach($baby as $item)
                     <div class="row text-center">
-                        <p class="col-md-5">Testingg</p>
-                        <span class="col-md-7 text-success">Rp. 500.000</span>
+                        <p class="col-md-5">{{$item->name}}</p>
+                        <span class="col-md-7 text-success">Rp. {{rupiah($item->price)}}</span>
                     </div>
-                @endfor
+                @endforeach
             </div>
             <div class="col-md-1"></div>
         </div>
     </div>
 </div>
 
-<div class="contact-area" id="resevation">
-    <div class="container">
-        <div class="section-title text-center">
-            <h2>Resevation</h2>
-        </div>
-        <div class="shape"></div>
-        <div class="row">
-            <div class="col-md-8 mb-md-0 mb-5">
-                <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+{{--<div class="contact-area" id="resevation">--}}
+{{--    <div class="container">--}}
+{{--        <div class="section-title text-center">--}}
+{{--            <h2>Resevation</h2>--}}
+{{--        </div>--}}
+{{--        <div class="shape"></div>--}}
+{{--        <div class="row">--}}
+{{--            <div class="col-md-8 mb-md-0 mb-5">--}}
+{{--                <form id="contact-form" name="contact-form" action="mail.php" method="POST">--}}
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="name" name="full_name" class="form-control">
-                                <label for="name" class="">Full Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="email" name="email" class="form-control">
-                                <label for="email" class="">Email</label>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="name" name="full_name" class="form-control">--}}
+{{--                                <label for="name" class="">Full Name</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="email" name="email" class="form-control">--}}
+{{--                                <label for="email" class="">Email</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="phone" name="number_phone" class="form-control">
-                                <label for="phone" class="">Phone Number</label>
-                            </div>
-                        </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="phone" name="number_phone" class="form-control">--}}
+{{--                                <label for="phone" class="">Phone Number</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="wa" name="wa" class="form-control">
-                                <label for="wa" class="">WhatsApp</label>
-                            </div>
-                        </div>
-                    </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="wa" name="wa" class="form-control">--}}
+{{--                                <label for="wa" class="">WhatsApp</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="date" id="date_reservation" name="date_reservation" class="form-control">
-                            </div>
-                        </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="date" id="date_reservation" name="date_reservation" class="form-control">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <select id="hour_reservation" name="hour_reservation" class="form-control">
-                                    <option value="">-- Select Jam --</option>
-                                    <option value="08.00am-09.00am">08.00am - 09.00am</option>
-                                    <option value="10.00am-11.00am">10.00am - 11.00am</option>
-                                    <option value="12.00am-01.00pm">12.00am - 01.00pm</option>
-                                    <option value="02.00pm-03.00pm">02.00pm - 03.00pm</option>
-                                    <option value="04.00pm-05.00pm">04.00pm - 05.00am</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <select id="hour_reservation" name="hour_reservation" class="form-control">--}}
+{{--                                    <option value="">-- Select Jam --</option>--}}
+{{--                                    <option value="08.00am-09.00am">08.00am - 09.00am</option>--}}
+{{--                                    <option value="10.00am-11.00am">10.00am - 11.00am</option>--}}
+{{--                                    <option value="12.00am-01.00pm">12.00am - 01.00pm</option>--}}
+{{--                                    <option value="02.00pm-03.00pm">02.00pm - 03.00pm</option>--}}
+{{--                                    <option value="04.00pm-05.00pm">04.00pm - 05.00am</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="city" name="city" class="form-control">
-                                <label for="city" class="">Kecamatan</label>
-                            </div>
-                        </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="city" name="city" class="form-control">--}}
+{{--                                <label for="city" class="">Kecamatan</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <input type="text" id="village" name="village" class="form-control">
-                                <label for="village" class="">Kelurahan</label>
-                            </div>
-                        </div>
-                    </div>
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <input type="text" id="village" name="village" class="form-control">--}}
+{{--                                <label for="village" class="">Kelurahan</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="md-form mb-0">
-                                <select id="isService" name="type_reservation" class="form-control select2">
-                                    <option value="">-- Select Services --</option>
-                                    <option value="1">Home Care</option>
-                                    <option value="2">Baby SPA</option>
-                                </select>
-                            </div>
-                        </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <select id="isService" name="type_reservation" class="form-control select2">--}}
+{{--                                    <option value="">-- Select Services --</option>--}}
+{{--                                    <option value="1">Home Care</option>--}}
+{{--                                    <option value="2">Baby SPA</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
-                        <div class="col-md-6 d-none" id="noneService">
-                            <div class="md-form mb-0">
-                                <select name="name_reservation" class="form-control selectMaster">
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+{{--                        <div class="col-md-6 d-none" id="noneService">--}}
+{{--                            <div class="md-form mb-0">--}}
+{{--                                <select name="name_reservation" class="form-control selectMaster">--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="md-form">
-                                <textarea id="message" name="address" rows="2" class="form-control md-textarea"></textarea>
-                                <label for="message">Alamat</label>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="md-form">--}}
+{{--                                <textarea id="message" name="address" rows="2" class="form-control md-textarea"></textarea>--}}
+{{--                                <label for="message">Alamat</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="text-center text-md-left">
-                        <button type="button" class="btn btn-md btn-pink waves-effect waves-light">Send Resevation</button>
-                    </div>
-                </form>
-                <div class="status"></div>
-            </div>
-            <div class="col-md-4 text-center">
-                <div class="mb-2">
-                    <h4>Jadwal Home Care & Baby SPA</h4>
-                </div>
-                <div class="list-unstyled mb-0">
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Senin</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Selasa</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Rabu</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Kamis</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Jumaat</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Sabtu</h5>
-                        <span class="col-lg-7">8:00am - 05:00pm</span>
-                    </div>
-                    <div class="row time-table">
-                        <h5 class="col-lg-5">Minggu</h5>
-                        <span class="col-lg-7 text-warning">Closed</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{{--                    <div class="text-center text-md-left">--}}
+{{--                        <button type="button" class="btn btn-md btn-pink waves-effect waves-light">Send Resevation</button>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--                <div class="status"></div>--}}
+{{--            </div>--}}
+{{--            <div class="col-md-4 text-center">--}}
+{{--                <div class="mb-2">--}}
+{{--                    <h4>Jadwal Home Care & Baby SPA</h4>--}}
+{{--                </div>--}}
+{{--                <div class="list-unstyled mb-0">--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Senin</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Selasa</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Rabu</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Kamis</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Jumaat</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Sabtu</h5>--}}
+{{--                        <span class="col-lg-7">8:00am - 05:00pm</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="row time-table">--}}
+{{--                        <h5 class="col-lg-5">Minggu</h5>--}}
+{{--                        <span class="col-lg-7 text-warning">Closed</span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 <footer>
     <div class="footer-area">

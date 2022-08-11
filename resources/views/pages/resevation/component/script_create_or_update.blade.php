@@ -66,7 +66,9 @@
                     if(data.status == "ok"){
                         $('.submitBtn').prop('disabled', true);
                         toastr["success"](data.message);
-                        window.location.reload(true)
+                        setTimeout( () => {
+                            window.location.reload(true)
+                        },2500)
                     }
                 },
                 error: (data) => {

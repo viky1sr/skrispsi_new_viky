@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers\HomeCare;
 
+use App\HomeCare\MasterHomeCare\Repositories\MasterHomeCareRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class MasterHomeCareController extends Controller
 {
+    private $repoMasterHomeCare;
+
+    public function __construct(
+        MasterHomeCareRepository $repoMasterHomeCare
+    ){
+        $this->repoMasterHomeCare = $repoMasterHomeCare;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,11 +24,11 @@ class MasterHomeCareController extends Controller
      */
     public function index()
     {
-        //
+        return  view('pages.master_data.home_care.index');
     }
 
     public function dataTable(Request $request){
-
+        return $this->repoMasterHomeCare->dataTableMasterHomeCare($request->all());
     }
 
     /**

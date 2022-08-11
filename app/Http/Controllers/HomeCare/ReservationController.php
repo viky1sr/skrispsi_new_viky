@@ -40,9 +40,9 @@ class ReservationController extends Controller
 
     public function dataTable(Request $request){
         if(\Auth::user()->hasRole('admin')){
-            $data = Reservation::with('r_genetic','master_data','status');
+            $data = Reservation::with('r_genetic','master_data','master_data_2','status','user');
         } else {
-            $data = Reservation::with('r_genetic','master_data','status')->where('user_id','=',\Auth::user()->id);
+            $data = Reservation::with('r_genetic','master_data','master_data_2','status')->where('user_id','=',\Auth::user()->id);
         }
 
         return DataTables::of($data)->toJson();

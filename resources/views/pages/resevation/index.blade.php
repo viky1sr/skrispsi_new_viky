@@ -30,7 +30,9 @@
                                     <th>Hour</th>
                                     <th>Scheduling</th>
                                     <th>Status</th>
+                                    @role('admin')
                                     <th class="text-center">Action</th>
+                                    @endrole
                                 </tr>
                                 </thead>
                                 <tbody>

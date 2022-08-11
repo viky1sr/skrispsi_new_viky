@@ -31,11 +31,11 @@ class MasterSpaController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.master_data.baby_spa.index');
     }
 
     public function dataTable(Request $request){
-
+        return $this->masterSpaRepo->dataTableMasterSpa($request->all());
     }
 
     /**

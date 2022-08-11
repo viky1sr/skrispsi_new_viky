@@ -8,6 +8,7 @@ use App\HomeCare\MasterHomeCare\Repositories\Interfaces\MasterHomeCareRepository
 use App\HomeCare\MasterHomeCare\Transformations\MasterHomeCareTransformable;
 use Illuminate\Database\QueryException;
 use Jsdecena\Baserepo\BaseRepository;
+use Yajra\DataTables\DataTables;
 
 class MasterHomeCareRepository extends BaseRepository implements MasterHomeCareRepositoryInterface
 {
@@ -112,8 +113,20 @@ class MasterHomeCareRepository extends BaseRepository implements MasterHomeCareR
         }
     }
 
-    public function dataMasterHomeCare(): MasterHomeCare
+    public function dataTableMasterHomeCare(array $params)
     {
-        return $this->model->select('id','name','price')->get();
+        $name = isset($params['name']) ? $params['name'] : "";
+        $price = isset($params['price']) ? $params['price'] : "";
+
+        $result = $this->model
+            ->when($name,function ($q,$param) {
+                $q->where('name','LIKE','%'.$param.'%');
+            })
+            ->when($price,function ($q,$param) {
+                $rp = str_replace([',','.'],"",$param);
+                $q->where('price','LIKE','%'.$rp.'%');
+            });
+
+        return DataTables::of($result)->toJson();
     }
 }

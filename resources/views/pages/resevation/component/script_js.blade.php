@@ -23,6 +23,7 @@
         },
         processing : true,
         serverSide : true,
+        searching : false,
         ajax: {
             url: '{{route('resevation.datatable')}}',
             type: 'GET',
@@ -35,9 +36,20 @@
                     return row.type_reservation_id == 1 ? 'Home Care': 'Baby Spa';
                 }
             },
-            {data: 'master_data.name',name: 'master_data.name'},
+            {data: 'id',name: 'id' , render: (data,type,row) => {
+                    if(row.type == 1){
+                        return row.master_data.name
+                    } else {
+                        return  row.master_data_2.name
+                    }
+                }
+            },
             {data: 'master_data.price',name: 'master_data.price',render: (data,type,row) => {
-                    return formatRupiah(row.master_data.price, 'Rp. ');
+                    if(row.type == 1){
+                        return formatRupiah(row.master_data.price, 'Rp. ');
+                    } else {
+                        return formatRupiah(row.master_data_2.price, 'Rp. ');
+                    }
                 }
             },
             {data: 'date_reservation',name: 'date_reservation', render: (data,type,row) => {
@@ -52,6 +64,7 @@
                 }
             },
             {data: 'status.status_name',name: 'status.status_name'},
+            @role('admin')
             {data: 'id',name: 'id', render: (data,type,row) => {
                     console.log(row)
                     return `
@@ -69,6 +82,7 @@
                     `
                 }
             },
+            @endrole
         ],
         lengthMenu: [5, 10, 20, 50],
         pageLength: 5,

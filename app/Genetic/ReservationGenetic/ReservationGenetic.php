@@ -10,6 +10,9 @@ class ReservationGenetic extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'reservation_id' , 'running_genetic'
+    ];
 
     public function reservation(){
         return $this->hasOne(Reservation::class,'id','reservation_id');

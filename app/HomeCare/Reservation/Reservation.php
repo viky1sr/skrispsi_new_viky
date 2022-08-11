@@ -6,8 +6,10 @@ use App\Genetic\ReservationGenetic\ReservationGenetic;
 use App\HomeCare\MasterHomeCare\MasterHomeCare;
 use App\HomeCare\MasterSpa\MasterSpa;
 use App\HomeCare\MasterStatus\MasterStatus;
+use App\HomeCare\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Reservation extends Model
 {
@@ -23,20 +25,24 @@ class Reservation extends Model
     }
 
     public function master_data(){
-        $checkData = $this->hasOne(Reservation::class,'id','id')
-            ->select('id','type_reservation_id')
-            ->first();
-        if($checkData->type_reservation_id == 1){
-            return $this->hasOne(MasterHomeCare::class,'id','name_reservation_id')
-                ->select('id','name','price','type');
-        } else {
-            return $this->hasOne(MasterSpa::class,'id','name_reservation_id')
-                ->select('id','name','price','type');
-        }
+        return $this->hasOne(MasterHomeCare::class,'id','name_reservation_id')
+            ->select('id','name','price','type')
+            ->where('type','=', 1) ;
+    }
+
+    public function master_data_2(){
+        return $this->hasOne(MasterSpa::class,'id','name_reservation_id')
+            ->select('id','name','price','type')
+            ->where('type','=', 2);
     }
 
     public function status(){
         return $this->hasOne(MasterStatus::class,'status_id','status_id')
             ->select('status_id','status_name');
+    }
+
+    public function user(){
+        return $this->hasOne(User::class,'id','user_id')
+            ->select('id','full_name','number_phone','email');
     }
 }

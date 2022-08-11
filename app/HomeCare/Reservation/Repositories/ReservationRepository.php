@@ -26,7 +26,13 @@ class ReservationRepository extends BaseRepository implements ReservationReposit
     public function createResevation(array $attributes)
     {
         try {
-            return $this->create($attributes);
+            $user = \Auth::user()->id;
+            if($user){
+                $data = array_merge($attributes,['user_id' => $user]);
+            } else {
+                $data = $attributes;
+            }
+            return $this->create($data);
         } catch (QueryException $e){
             report($e);
             throw new createReservationErrorException('Sorry, error create reservation.');
