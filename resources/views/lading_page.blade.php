@@ -42,7 +42,7 @@
                             <li><a href="{{url('/register')}}">Register</a></li>
                             <li><a href="{{url('/login')}}">Login</a></li>
                                 @else
-                                <li><a href="{{route('to_home')}}">Admin Panel</a></li>
+                                <li><a href="{{route('to_home')}}">Dashboard Panel</a></li>
                                 <li><a href="{{route('logout')}}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"

@@ -46,7 +46,6 @@
                 }
             },
             {data: 'master_data.price',name: 'master_data.price',render: (data,type,row) => {
-                    return formatRupiah(row.master_data.price, 'Rp. ');
                     if(row.type_reservation_id == 1){
                         return formatRupiah(row.master_data.price, 'Rp. ');
                     } else {

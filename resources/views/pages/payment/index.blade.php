@@ -12,7 +12,7 @@
     <div class="layout-px-spacing">
         <div class="page-header">
             <div class="page-title">
-                <h3>List Resevation</h3>
+                <h3>List Pembayaran</h3>
             </div>
         </div>
 

@@ -126,6 +126,9 @@ class ReservationRepository extends BaseRepository implements ReservationReposit
     {
         return $this->model
             ->where('status_id','>',0)
+            ->when(\Auth::user()->hasRole('member'), function ($q) {
+                $q->where('user_id','=',\Auth::user()->id);
+            })
             ->when(isset($params['type_reservation_id']), function ($q) use($params) {
                $q->where('type_reservation_id','=',$params['type_reservation_id']);
             })
