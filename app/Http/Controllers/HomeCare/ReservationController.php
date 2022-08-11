@@ -119,7 +119,12 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($this->repoResevation->updateResevation($request->except('_token','_method'),$id)){
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Success update data.'
+            ],200);
+        }
     }
 
     /**

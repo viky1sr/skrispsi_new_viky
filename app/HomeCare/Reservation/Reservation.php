@@ -17,7 +17,7 @@ class Reservation extends Model
 
     protected $fillable = [
         'user_id','type_reservation_id','name_reservation_id','city','village','address',
-        'date_reservation','hour_reservation','reservation_meet','reservation_repeat','status'
+        'date_reservation','hour_reservation','reservation_meet','reservation_repeat','status_id'
     ];
 
     public function r_genetic(){

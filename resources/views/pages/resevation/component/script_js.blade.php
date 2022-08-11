@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
     function formatRupiah(angka, prefix){
         var number_string = angka.toString().replace(/[^,\d]/g, '').toString(),
@@ -13,7 +14,7 @@
         return prefix === undefined ? rupiah : rupiah ? `Rp. ${rupiah}` : "";
     }
 
-    c1 = $('#style-1').DataTable({
+    oTable = $('#style-1').DataTable({
         oLanguage: {
             "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
             "sInfo": "Showing page _PAGE_ of _PAGES_",
@@ -75,8 +76,8 @@
 
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink4">
                                 <a class="dropdown-item" href="javascript:void(0);">View</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                <a class="dropdown-item" onclick="updateStatus(${row.id})" >Update Status</a>
+                                <a class="dropdown-item  ${row.status == 0 ? '': 'd-none'}" onclick="deleteData(${row.id})">Delete</a>
                             </div>
                         </div>
                     `
@@ -88,5 +89,83 @@
         pageLength: 5,
     });
 
-    multiCheck(c1);
+    multiCheck(oTable);
+
+
+    const updateStatus = id => {
+        if(id > 0) {
+            $('#modal-form').modal('show');
+            $('.modal-title').text('Update Status');
+            $('#id').val(id);
+            $('.submitStatus').click( (e) => {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url('/resevation/edit')}}' + '/' + id,
+                    data: new FormData($('#updateStatusForm')[0]),
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: (data) => {
+                        if(data.status == "ok"){
+                            oTable.ajax.reload();
+                            $('#modal-form').modal('hide');
+                            toastr["success"](data.message);
+                        }
+                    },
+                    error: (data) => {
+                        var data = data.responseJSON;
+                        if(data.status == "fail"){
+                            toastr["error"](data.message);
+                        }
+                    }
+                });
+            })
+        }
+    }
+
+
+    const deleteData = id => {
+        alert(id)
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+        swal({
+            title: 'Yakin ingin menghapus data?',
+            text: "Data yang sudah di hapus tidak bisa di kembalikan!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            padding: '2em'
+        }).then(function(result) {
+            if (result == true) {
+                $.ajax({
+                    url : "",
+                    type : "POST",
+                    data : {'_method' : 'DELETE', '_token' : csrf_token},
+                    success : data => {
+                        oTable.ajax.reload();
+                        if(data.status == "ok"){
+                            swal(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    },
+                    error: function(data){
+                        var data = data.responseJSON;
+                        if(data.status == "fail"){
+                            toastr["error"](data.message);
+                        }
+                    }
+                });
+            }
+        })
+    };
 </script>
