@@ -35,7 +35,12 @@ class ReservationRepository extends BaseRepository implements ReservationReposit
 
     public function updateResevation(array $attributes, int $id)
     {
-        // TODO: Implement updateResevation() method.
+        try {
+            return $this->find($id)->update($attributes);
+        } catch (QueryException $e){
+            report($e);
+            throw new createReservationErrorException('Sorry, error update reservation.');
+        }
     }
 
     public function listResevation(array $params)

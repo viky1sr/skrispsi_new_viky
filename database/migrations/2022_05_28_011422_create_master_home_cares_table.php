@@ -15,6 +15,7 @@ class CreateMasterHomeCaresTable extends Migration
     {
         Schema::create('master_home_cares', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('type')->default(1);
             $table->string('name');
             $table->string('price');
             $table->timestamp('deleted_at')->nullable();

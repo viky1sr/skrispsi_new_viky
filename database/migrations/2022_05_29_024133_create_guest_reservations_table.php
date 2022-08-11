@@ -15,6 +15,7 @@ class CreateGuestReservationsTable extends Migration
     {
         Schema::create('guest_reservations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->string('full_name');
             $table->string('email')->nullable();
             $table->string('number_phone');
@@ -26,6 +27,12 @@ class CreateGuestReservationsTable extends Migration
             $table->text('address');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('guest_reservations', function (Blueprint $table) {
+            $table->foreign('status_id')
+                ->on('master_statuses')
+                ->references('id');
         });
     }
 

@@ -25,7 +25,7 @@ class BabySpaSeeder extends Seeder
             'Baby GYM',
             'Face Acupressure for Baby',
             'Baby Swim',
-            'Baby SPA: massage & gym & swim',
+            'Baby SPA massage & gym & swim',
             'Lulur Bayi',
             'Pediatric massage for Baby',
             'Kids massage',

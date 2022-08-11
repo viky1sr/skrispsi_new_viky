@@ -15,6 +15,7 @@ class CreateMasterSpasTable extends Migration
     {
         Schema::create('master_spas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('type')->default(2);
             $table->string('name');
             $table->string('price');
             $table->timestamp('deleted_at')->nullable();

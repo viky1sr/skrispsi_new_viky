@@ -9,5 +9,8 @@ class ResevationGuestController extends Controller
 {
     public function resevationGuest(Request  $request){
         $req = $request->all();
+
+
+
     }
 }
