@@ -119,6 +119,11 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validation = $this->valResevation->updateValidation($request->all());
+        if($validation){
+            return $validation;
+        }
+
         if($this->repoResevation->updateResevation($request->except('_token','_method'),$id)){
             return response()->json([
                 'status' => 'ok',

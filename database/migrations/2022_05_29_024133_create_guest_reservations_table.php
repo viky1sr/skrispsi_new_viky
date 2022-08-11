@@ -32,7 +32,7 @@ class CreateGuestReservationsTable extends Migration
         Schema::table('guest_reservations', function (Blueprint $table) {
             $table->foreign('status_id')
                 ->on('master_statuses')
-                ->references('id');
+                ->references('status_id');
         });
     }
 

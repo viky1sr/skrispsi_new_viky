@@ -38,7 +38,7 @@ class CreatePaymentsTable extends Migration
                 ->references('id');
             $table->foreign('status_id')
                 ->on('master_statuses')
-                ->references('id');
+                ->references('status_id');
         });
     }
 

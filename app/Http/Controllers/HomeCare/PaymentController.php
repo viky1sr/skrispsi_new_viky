@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\HomeCare;
 
+use App\HomeCare\Reservation\Reservation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
@@ -19,6 +21,15 @@ class PaymentController extends Controller
     public function index()
     {
         return view('pages.payment.index');
+    }
+
+    public function dataTable(Request $request){
+        if(\Auth::user()->hasRole('admin')){
+            $data = Reservation::with('info_payment','master_data','master_data_2','status','user')->where('status_id','=',2);
+        } else {
+            $data = Reservation::with('info_payment','master_data','master_data_2','status')->where('status_id','=',2)->where('user_id','=',\Auth::user()->id);
+        }
+        return DataTables::of($data)->toJson();
     }
 
     /**

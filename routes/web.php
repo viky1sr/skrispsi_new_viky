@@ -56,3 +56,7 @@ Route::group(['prefix' => 'master-data','as' => 'master-data.'], function(){
         Route::delete('/delete','HomeCare\MasterHomeCareController@destroy')->name('delete');
     });
 });
+
+Route::group(['prefix' => 'payment', 'as' => 'payment.'], function() {
+    Route::get('/','HomeCare\PaymentController@index')->name('index');
+});

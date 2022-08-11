@@ -18,6 +18,8 @@ class CreateReservationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('type_reservation_id');
             $table->unsignedBigInteger('name_reservation_id');
+            $table->string('total_price');
+            $table->string('code_price')->unique();
             $table->string('city');
             $table->string('village');
             $table->text('address');
@@ -37,7 +39,7 @@ class CreateReservationsTable extends Migration
 
             $table->foreign('status_id')
                 ->on('master_statuses')
-                ->references('id');
+                ->references('status_id');
         });
     }
 

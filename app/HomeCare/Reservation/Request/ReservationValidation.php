@@ -66,7 +66,21 @@ class ReservationValidation {
      * @req request data from ReservasiController @update
      */
     public function updateValidation(array $req){
+        $msg = [
+            'status_id.required' => 'Silakan pilih status.'
+        ];
+        $validation = Validator::make($req,[
+            'status_id' => 'required',
+        ],$msg);
 
+        if($validation->fails()){
+            return response()->json([
+                'status' => 'fail',
+                'message' => $validation->errors()->first()
+            ],422);
+        }
+
+        return null;
     }
 
 }

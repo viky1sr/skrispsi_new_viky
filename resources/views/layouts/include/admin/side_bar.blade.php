@@ -122,8 +122,8 @@
         <li class="menu menu-heading">
             <div class="heading"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg><span>Information</span></div>
         </li>
-        <li class="menu">
-            <a href="#" aria-expanded="false"  class="dropdown-toggle">
+        <li class="menu {{Route::is('payment.index') ? "active" : ""}}">
+            <a href="{{route('payment.index')}}" aria-expanded="{{Route::is('payment.index') ? "true" : "false"}}"  class="dropdown-toggle">
                 <div class="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
                     <span>Info Pembayaran</span>

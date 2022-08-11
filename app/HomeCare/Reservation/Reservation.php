@@ -6,6 +6,7 @@ use App\Genetic\ReservationGenetic\ReservationGenetic;
 use App\HomeCare\MasterHomeCare\MasterHomeCare;
 use App\HomeCare\MasterSpa\MasterSpa;
 use App\HomeCare\MasterStatus\MasterStatus;
+use App\HomeCare\Payment\Payment;
 use App\HomeCare\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,8 @@ class Reservation extends Model
 
     protected $fillable = [
         'user_id','type_reservation_id','name_reservation_id','city','village','address',
-        'date_reservation','hour_reservation','reservation_meet','reservation_repeat','status_id'
+        'date_reservation','hour_reservation','reservation_meet','reservation_repeat','status_id',
+        'total_price','code_price'
     ];
 
     public function r_genetic(){
@@ -44,5 +46,9 @@ class Reservation extends Model
     public function user(){
         return $this->hasOne(User::class,'id','user_id')
             ->select('id','full_name','number_phone','email');
+    }
+
+    public function info_payment(){
+        return $this->hasOne(Payment::class,'reservation_id','id');
     }
 }

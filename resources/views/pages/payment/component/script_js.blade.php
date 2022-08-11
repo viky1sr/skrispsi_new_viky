@@ -46,11 +46,27 @@
                 }
             },
             {data: 'master_data.price',name: 'master_data.price',render: (data,type,row) => {
+                    return formatRupiah(row.master_data.price, 'Rp. ');
                     if(row.type_reservation_id == 1){
                         return formatRupiah(row.master_data.price, 'Rp. ');
                     } else {
                         return formatRupiah(row.master_data_2.price, 'Rp. ');
                     }
+                }
+            },
+            {data: 'total_price',name: 'total_price', render: (data,type,row) => {
+                    let getTotalMeet = (row.reservation_meet != null ? row.reservation_meet * row.reservation_repeat.replace('_minggu','') : 1);
+                    return `${getTotalMeet}x Pertemuan`
+                }
+            },
+            {data: 'total_price',name: 'total_price', render: (data,type,row) => {
+                    let getTotalPrice = (row.type_reservation_id == 1 ? row.master_data.price : row.master_data_2.price) *
+                        (row.reservation_meet != null ? row.reservation_meet * row.reservation_repeat.replace('_minggu','') : 1);
+                    return formatRupiah(getTotalPrice,'Rp. ')
+                }
+            },
+            {data: 'total_price',name: 'total_price', render: (data,type,row) => {
+                    return formatRupiah(row.total_price,'Rp. ')
                 }
             },
             {data: 'date_reservation',name: 'date_reservation', render: (data,type,row) => {
@@ -59,35 +75,10 @@
                     return isDate;
                 }
             },
-            {data: 'hour_reservation',name: 'hour_reservation'},
             {data: 'id',name: 'id', render: (data,type,row) => {
-                    return row.r_genetic != undefined ? 'Yes' : 'No'
+                    return `<button type="button" class="btn btn-primary" style="margin-left: 6em">Bayar Sekarang</button>`
                 }
             },
-            {data: 'status.status_name',name: 'status.status_name'},
-            @role('admin')
-            {data: 'id',name: 'id', render: (data,type,row) => {
-                    let checkStatusDel =  row.status_id > 1 ? true : false;
-                    let checkStatusUp =  row.status_id >= 1 ? true : false;
-
-                    console.log('sss',checkStatusDel,checkStatusUp)
-
-                    return  `
-                     <div class="dropdown custom-dropdown text-center">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink4">
-                                <a class="dropdown-item" href="javascript:void(0);">View</a>
-                                <a class="dropdown-item ${checkStatusUp == true ? 'd-none': ''}" onclick="updateStatus(${row.id})" >Update Status</a>
-                                <a class="dropdown-item  ${checkStatusDel ==  true ? 'd-none': ''}" onclick="deleteData(${row.id})">Delete</a>
-                            </div>
-                        </div>
-                    `
-                }
-            },
-            @endrole
         ],
         lengthMenu: [5, 10, 20, 50],
         pageLength: 5,
@@ -102,7 +93,6 @@
             $('.modal-title').text('Update Status');
             $('#id').val(id);
             $('.submitStatus').click( (e) => {
-                $('.submitStatus').addClass('d-none');
                 e.preventDefault();
                 $.ajaxSetup({
                     headers: {
@@ -122,16 +112,12 @@
                             oTable.ajax.reload();
                             $('#modal-form').modal('hide');
                             toastr["success"](data.message);
-                            setTimeout(() => {
-                                $('.submitStatus').removeClass('d-none');
-                            },2000)
                         }
                     },
                     error: (data) => {
                         var data = data.responseJSON;
                         if(data.status == "fail"){
                             toastr["error"](data.message);
-                            $('.submitStatus').removeClass('d-none');
                         }
                     }
                 });

@@ -25,11 +25,11 @@
                                 <thead>
                                 <tr>
                                     <th>Type</th>
-                                    <th>Resevation</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
-                                    <th>Hour</th>
-                                    <th>Scheduling</th>
+                                    <th>Reservasi</th>
+                                    <th>Harga</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam Pertemuan</th>
+                                    <th>Reservasi Bulanan</th>
                                     <th>Status</th>
                                     @role('admin')
                                     <th class="text-center">Action</th>

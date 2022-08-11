@@ -11,18 +11,8 @@
                 <div class="w-chart">
                     <div class="w-chart-section">
                         <div class="w-detail">
-                            <p class="w-title">Total Reservation</p>
-                            <p class="w-stats">423,964</p>
-                        </div>
-                        <div class="w-chart-render-one">
-                            <div id="totalReservation"></div>
-                        </div>
-                    </div>
-
-                    <div class="w-chart-section">
-                        <div class="w-detail">
                             <p class="w-title">Home Care</p>
-                            <p class="w-stats">7,929</p>
+                            <p class="w-stats">{{rupiah($sumHomeCare)}}</p>
                         </div>
                         <div class="w-chart-render-one">
                             <div id="homeCare"></div>
@@ -32,12 +22,23 @@
                     <div class="w-chart-section">
                         <div class="w-detail">
                             <p class="w-title">Baby SPA</p>
-                            <p class="w-stats">7,929</p>
+                            <p class="w-stats">{{rupiah($sumBabySpa)}}</p>
                         </div>
                         <div class="w-chart-render-one">
                             <div id="babySpa"></div>
                         </div>
                     </div>
+
+                    <div class="w-chart-section">
+                        <div class="w-detail">
+                            <p class="w-title">Total Reservation</p>
+                            <p class="w-stats">{{rupiah($sumReservation)}}</p>
+                        </div>
+                        <div class="w-chart-render-one">
+                            <div id="totalReservation"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -165,39 +166,41 @@
                     <div class="mt-container mx-auto">
                         <div class="timeline-line">
 
-                            <div class="item-timeline timeline-new">
-                                <div class="t-dot">
-                                    <div class="t-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                </div>
-                                <div class="t-content">
-                                    <div class="t-uppercontent">
-                                        <h5>Reservation</h5>
-                                        <span class="">27 Feb, 2020</span>
+                            @foreach($notifications as $item)
+                                <div class="item-timeline timeline-new">
+                                    <div class="t-dot">
+                                        @if($item->data['status'] == 'Reject')
+                                            <div class="t-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            </div>
+                                        @elseif($item->data['status'] == 'Pending')
+                                            <div class="t-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            </div>
+                                            @elseif($item->data['status'] == 'On Progress')
+                                            <div class="t-info">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            </div>
+                                            @else
+                                            <div class="t-success">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            </div>
+                                        @endif
                                     </div>
-                                    <p><span>Success</span> Reservation</p>
-                                </div>
-                            </div>
-
-                            <div class="item-timeline timeline-new">
-                                <div class="t-dot">
-                                    <div class="t-danger">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    <div class="t-content">
+                                        <div class="t-uppercontent">
+                                            <h5>{{$item->data['name']}}</h5>
+                                            <span class="">{{\Carbon\Carbon::parse($item->data['date'])->format('d, M Y G:i')}}</span>
+                                        </div>
+                                        <p><span>{{$item->data['status']}}</span> {{$item->data['name']}}</p>
                                     </div>
                                 </div>
-                                <div class="t-content">
-                                    <div class="t-uppercontent">
-                                        <h5>Reservation</h5>
-                                        <span class="">27 Feb, 2020</span>
-                                    </div>
-                                    <p><span>Reject</span> Reservation</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 @stop
 
@@ -223,7 +226,7 @@
                 }
             },
             series: [{
-                data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25]
+                data:{{$totalReservation}}
             }],
             stroke: {
                 curve: 'smooth',
@@ -322,7 +325,7 @@
                 }
             },
             series: [{
-                data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25]
+                data: {{$totalHomeCare}}
             }],
             stroke: {
                 curve: 'smooth',
@@ -421,7 +424,7 @@
                 }
             },
             series: [{
-                data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25]
+                data: {{$totalBabySpa}}
             }],
             stroke: {
                 curve: 'smooth',

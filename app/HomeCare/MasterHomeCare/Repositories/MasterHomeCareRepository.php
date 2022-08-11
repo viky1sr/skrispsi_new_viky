@@ -117,13 +117,12 @@ class MasterHomeCareRepository extends BaseRepository implements MasterHomeCareR
     {
         $name = isset($params['name']) ? $params['name'] : "";
         $price = isset($params['price']) ? $params['price'] : "";
-
         $result = $this->model
-            ->when($name,function ($q,$param) {
-                $q->where('name','LIKE','%'.$param.'%');
+            ->when($name,function ($q) use($name) {
+                $q->where('name','LIKE','%'.$name.'%');
             })
-            ->when($price,function ($q,$param) {
-                $rp = str_replace([',','.'],"",$param);
+            ->when($price,function ($q) use($price) {
+                $rp = str_replace([',','.'],"",$price);
                 $q->where('price','LIKE','%'.$rp.'%');
             });
 
